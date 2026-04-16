@@ -2,26 +2,45 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { Mail, MessageSquare, ShieldCheck, Trash2, CheckCircle2 } from "lucide-react";
+import { MessageSquare, ShieldCheck, Trash2, CheckCircle2, Send } from "lucide-react";
 
-const SUPPORT_EMAIL = "support@promitly.com";
-const PRIVACY_EMAIL = "privacy@promitly.com";
+const WEB3FORMS_KEY = "3c4a9224-ca66-4ac1-8b4c-a3ea88bc1f67";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", subject: "general", message: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     setLoading(true);
-    // Opens email client with pre-filled content as fallback
-    const subject = encodeURIComponent(`[${form.subject.toUpperCase()}] ${form.name}`);
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\nSubject: ${form.subject}\n\n${form.message}`);
-    window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
-    setLoading(false);
-    setSent(true);
+    setError("");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `[PROMITLY] ${form.subject.toUpperCase()} — from ${form.name}`,
+          from_name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSent(true);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,10 +62,10 @@ export default function ContactPage() {
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 36 }}>
               {[
-                { icon: <Mail size={16} color="var(--primary)" />, label: "General support", value: SUPPORT_EMAIL, href: `mailto:${SUPPORT_EMAIL}` },
-                { icon: <ShieldCheck size={16} color="var(--primary)" />, label: "Privacy & data requests", value: PRIVACY_EMAIL, href: `mailto:${PRIVACY_EMAIL}` },
+                { icon: <MessageSquare size={16} color="var(--primary)" />, label: "General support", value: "Fill the form below" },
+                { icon: <ShieldCheck size={16} color="var(--primary)" />, label: "Privacy & data requests", value: "Fill the form below" },
                 { icon: <Trash2 size={16} color="var(--rose)" />, label: "Delete your account", value: "Account → Delete account", href: "/account" },
-                { icon: <MessageSquare size={16} color="var(--primary)" />, label: "Response time", value: "1–2 business days", href: null },
+                { icon: <MessageSquare size={16} color="var(--primary)" />, label: "Response time", value: "1–2 business days" },
               ].map(({ icon, label, value, href }) => (
                 <div key={label} className="card" style={{ padding: "16px 18px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
@@ -54,7 +73,7 @@ export default function ContactPage() {
                     <span style={{ fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--text-4)", letterSpacing: "0.06em" }}>{label.toUpperCase()}</span>
                   </div>
                   {href ? (
-                    <Link href={href} style={{ fontSize: 13, color: "var(--primary)", textDecoration: "none", wordBreak: "break-all" }}>{value}</Link>
+                    <Link href={href} style={{ fontSize: 13, color: "var(--primary)", textDecoration: "none" }}>{value}</Link>
                   ) : (
                     <span style={{ fontSize: 13, color: "var(--text-2)" }}>{value}</span>
                   )}
@@ -67,10 +86,9 @@ export default function ContactPage() {
               {sent ? (
                 <div style={{ textAlign: "center", padding: "20px 0" }}>
                   <CheckCircle2 size={36} color="var(--emerald)" style={{ marginBottom: 14 }} />
-                  <h2 style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 18, color: "var(--text-1)", marginBottom: 8 }}>Opening your email app…</h2>
+                  <h2 style={{ fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: 18, color: "var(--text-1)", marginBottom: 8 }}>Message sent!</h2>
                   <p style={{ fontSize: 13, color: "var(--text-3)", lineHeight: 1.6 }}>
-                    If it didn&apos;t open, email us directly at{" "}
-                    <a href={`mailto:${SUPPORT_EMAIL}`} style={{ color: "var(--primary)" }}>{SUPPORT_EMAIL}</a>
+                    We got your message and will get back to you within 1–2 business days.
                   </p>
                   <button onClick={() => setSent(false)} style={{ marginTop: 20, background: "none", border: "none", cursor: "pointer", color: "var(--text-3)", fontSize: 13 }}>
                     Send another message
@@ -121,19 +139,19 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {error && (
+                    <p style={{ fontSize: 12, color: "var(--rose)", textAlign: "center" }}>{error}</p>
+                  )}
+
                   <button
                     type="submit"
                     disabled={loading || !form.name || !form.email || !form.message}
                     className="btn btn-primary"
-                    style={{ justifyContent: "center", opacity: (!form.name || !form.email || !form.message) ? 0.5 : 1 }}
+                    style={{ justifyContent: "center", gap: 8, opacity: (!form.name || !form.email || !form.message) ? 0.5 : 1 }}
                   >
-                    {loading ? "Opening email…" : "Send message"}
+                    <Send size={15} />
+                    {loading ? "Sending…" : "Send message"}
                   </button>
-
-                  <p style={{ fontSize: 11, color: "var(--text-4)", textAlign: "center", lineHeight: 1.6 }}>
-                    Clicking "Send message" will open your email client with your message pre-filled.
-                    Alternatively email us directly at <a href={`mailto:${SUPPORT_EMAIL}`} style={{ color: "var(--text-3)" }}>{SUPPORT_EMAIL}</a>.
-                  </p>
                 </form>
               )}
             </div>
@@ -145,7 +163,7 @@ export default function ContactPage() {
                 <p style={{ fontSize: 12, color: "var(--text-3)", lineHeight: 1.7 }}>
                   <strong style={{ color: "var(--text-2)" }}>Your data rights:</strong> Under GDPR, you can request access to, correction of, or deletion of your personal data at any time. To delete your account instantly, go to{" "}
                   <Link href="/account" style={{ color: "var(--primary)" }}>Account → Delete account</Link>.
-                  For all other data requests, email <a href={`mailto:${PRIVACY_EMAIL}`} style={{ color: "var(--primary)" }}>{PRIVACY_EMAIL}</a>. We respond within 30 days as required by law.
+                  For all other data requests, use the form above. We respond within 30 days as required by law.
                 </p>
               </div>
             </div>

@@ -2,7 +2,6 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
 const LAST_UPDATED = "15 April 2026";
-const CONTACT_EMAIL = "legal@promitly.com";
 
 export default function TermsPage() {
   return (
@@ -94,7 +93,7 @@ export default function TermsPage() {
 
               <Section title="13. Contact">
                 <P>For legal enquiries or questions about these Terms:</P>
-                <P><strong style={{ color: "var(--text-1)" }}>Email:</strong> <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: "var(--primary)" }}>{CONTACT_EMAIL}</a></P>
+                <P><Link href="/contact" className="btn btn-ghost" style={{ fontSize: 13, padding: "8px 18px", display: "inline-flex" }}>Contact us →</Link></P>
               </Section>
 
             </div>

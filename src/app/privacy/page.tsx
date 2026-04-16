@@ -2,7 +2,6 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
 const LAST_UPDATED = "15 April 2026";
-const CONTACT_EMAIL = "privacy@promitly.com";
 
 export default function PrivacyPage() {
   return (
@@ -23,7 +22,7 @@ export default function PrivacyPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
               <Section title="1. Who we are">
                 <P>PROMITLY ("we", "us", "our") operates the website at promitly.com — an AI prompt library. Our servers are hosted in the European Union (Ireland, AWS eu-west-1) via Supabase.</P>
-                <P>For data protection enquiries, contact us at <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: "var(--primary)" }}>{CONTACT_EMAIL}</a>.</P>
+                <P>For data protection enquiries, <Link href="/contact" style={{ color: "var(--primary)" }}>contact us here</Link>.</P>
               </Section>
 
               <Section title="2. What data we collect">
@@ -70,7 +69,7 @@ export default function PrivacyPage() {
                   "Right to object — object to processing based on legitimate interests.",
                   "Right to lodge a complaint — with your national data protection authority (e.g. ICO in the UK, CNIL in France).",
                 ]} />
-                <P>To exercise any right, email <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: "var(--primary)" }}>{CONTACT_EMAIL}</a>. We will respond within 30 days.</P>
+                <P>To exercise any right, <Link href="/contact" style={{ color: "var(--primary)" }}>contact us here</Link>. We will respond within 30 days.</P>
                 <P><strong style={{ color: "var(--text-1)" }}>Delete your account instantly:</strong> Go to <Link href="/account" style={{ color: "var(--primary)" }}>Account → Delete account</Link>. Your account and all data are permanently removed immediately.</P>
               </Section>
 
@@ -102,7 +101,7 @@ export default function PrivacyPage() {
 
               <Section title="11. Contact">
                 <P>For any privacy-related questions, data access requests, or deletion requests:</P>
-                <P><strong style={{ color: "var(--text-1)" }}>Email:</strong> <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: "var(--primary)" }}>{CONTACT_EMAIL}</a></P>
+                <P><Link href="/contact" className="btn btn-ghost" style={{ fontSize: 13, padding: "8px 18px", display: "inline-flex" }}>Contact us →</Link></P>
                 <P>We aim to respond to all requests within 5 business days and are legally required to respond within 30 days.</P>
               </Section>
             </div>
