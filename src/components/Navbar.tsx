@@ -47,17 +47,19 @@ export default function Navbar() {
       <div className="page" style={{ height: 58, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: "none" }}>
+        <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: 20,
-            fontWeight: 900,
-            letterSpacing: "-0.04em",
-            background: "linear-gradient(135deg, #fff 0%, var(--primary) 60%, var(--violet) 100%)",
+            fontFamily: "var(--font-display)",
+            fontSize: 16,
+            fontWeight: 800,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            background: "linear-gradient(135deg, var(--accent) 0%, var(--amber) 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
+            textShadow: "none",
           }}>
-            promitly
+            Promitly
           </span>
         </Link>
 

@@ -24,7 +24,7 @@ type ElectricBorderProps = {
 
 const ElectricBorder = ({
   children,
-  color = "#818cf8",
+  color = "#00e5c8",
   speed = 1,
   chaos = 0.12,
   borderRadius = 24,

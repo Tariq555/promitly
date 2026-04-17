@@ -71,7 +71,7 @@ function VerifyForm() {
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <Link href="/" style={{ textDecoration: "none", marginBottom: 24, display: "inline-block" }}>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 22, fontWeight: 900, letterSpacing: "-0.04em", background: "linear-gradient(135deg, #fff 0%, var(--primary) 60%, var(--violet) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            <span style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase" as const, background: "linear-gradient(135deg, var(--accent) 0%, var(--amber) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               promitly
             </span>
           </Link>

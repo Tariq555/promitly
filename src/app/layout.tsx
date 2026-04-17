@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import { Outfit, JetBrains_Mono } from "next/font/google";
+import { Orbitron, Outfit, JetBrains_Mono } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
+
+const orbitron = Orbitron({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
 
 const outfit = Outfit({
   variable: "--font-sans",
@@ -18,14 +25,14 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PROMITLY — AI Prompt Library",
+  title: "PROMITLY — AI Prompt Generator",
   description:
-    "Browse 130+ expert prompts across 12 categories. Works with ChatGPT, Claude, Gemini, Grok, Mistral, DeepSeek, Llama, Perplexity, and more.",
+    "Generate perfect AI prompts for Claude, ChatGPT, Gemini & more. 130+ expert prompts across 12 categories.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${mono.variable} h-full`}>
+    <html lang="en" className={`${orbitron.variable} ${outfit.variable} ${mono.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
         <AuthProvider>{children}</AuthProvider>
       </body>
