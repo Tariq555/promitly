@@ -25,9 +25,44 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PROMITLY — AI Prompt Generator",
+  metadataBase: new URL("https://promitly.com"),
+  title: {
+    default: "PROMITLY — AI Prompt Generator",
+    template: "%s | PROMITLY",
+  },
   description:
-    "Generate perfect AI prompts for Claude, ChatGPT, Gemini & more. 130+ expert prompts across 12 categories.",
+    "Generate perfect AI prompts for Claude, ChatGPT, Gemini & more. 130+ expert prompts across 12 categories. Free to use.",
+  keywords: [
+    "AI prompt generator", "ChatGPT prompts", "Claude prompts", "Gemini prompts",
+    "prompt engineering", "AI prompts", "best AI prompts", "prompt library",
+    "AI tools", "prompt templates",
+  ],
+  authors: [{ name: "Promitly" }],
+  creator: "Promitly",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://promitly.com",
+    siteName: "PROMITLY",
+    title: "PROMITLY — AI Prompt Generator",
+    description:
+      "Generate perfect AI prompts for Claude, ChatGPT, Gemini & more. 130+ expert prompts across 12 categories.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PROMITLY — AI Prompt Generator",
+    description:
+      "Generate perfect AI prompts for Claude, ChatGPT, Gemini & more. Free to use.",
+    creator: "@promitly",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-snippet": -1 },
+  },
+  alternates: {
+    canonical: "https://promitly.com",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
